@@ -1,11 +1,13 @@
 backup-MHW_Save_nPC
 
-PS script to backup my MHW save and nativePC
+PS script to backup my MHW save,  nativePC & Tools-Editor
 
 Author : puchijon
 
-Version : 1.0.1
+Version : 1.0.3
 
 -------------------------------------------------------------------------------------------------------------------------------------------
 
-This automates via a Windows' task a backup of my MHW save files and "nativePC" folder to OneDrive
+This automates via a Windows' task or manually a backup of MHW save files and "nativePC" folder to OneDrive (by default).
+
+ATM, nothing is configured to automatically let anyone use this script.
