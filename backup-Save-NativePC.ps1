@@ -1,6 +1,6 @@
 ﻿<#
     .SYNOPSIS
-    Backup save file & nativePC from MHW. Version 1.0.3
+    Backup save file & nativePC from MHW. Version 1.0.5
 
     .DESCRIPTION
     Backup "save" file & "nativePC" from "Monster Hunter World" ; "Iceborne" compatible.
@@ -29,21 +29,21 @@
 $date = Get-Date -Format "yyyyMMdd-HHmm"
 $originalSave = Get-ChildItem -Path "C:\Program Files (x86)\Steam\steamapps\common\Monster Hunter World\savedata_backup\SAVEDATA1000"
 $originalNativePC = "C:\Program Files (x86)\Steam\steamapps\common\Monster Hunter World\nativePC\"
-$originalMHWTools = "C:\Games\MHW\MHW tools\"
+$originalMHWTools = "D:\Games\MHW\MHW tools\"
 $nameBackupSave = $originalSave.Name + "-" + $date
 $namenPCSave = "nativePC" + "-" + $date + "\"
 
 # Backup path
-$backupModPath = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\nativePC\$namenPCSave"
-$backupModPathFolder = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\nativePC\"
-$backupSavePath = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\save\$nameBackupSave"
-$backupSavePathFolder = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\save\"
-$backupMHWTools = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\MHW tools"
+$backupModPath = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\nativePC\$namenPCSave"
+$backupModPathFolder = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\nativePC\"
+$backupSavePath = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\save\$nameBackupSave"
+$backupSavePathFolder = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\save\"
+$backupMHWTools = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\MHW tools"
 
 # Log files path
-$logSavePath = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\saveFile.log"
-$logModPath = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\nativePC.log"
-$logFileMHWTools = "C:\Users\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\logs_MHWTools.log"
+$logSavePath = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\saveFile.log"
+$logModPath = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\nativePC.log"
+$logFileMHWTools = "D:\puchi\OneDrive\Documents\_backup\Games\MHW\_logs\logs_MHWTools.log"
 
 
 # Fonction de backup Save
@@ -100,12 +100,12 @@ function purgeBackup {
     $countSave = (Get-ChildItem -Path $backupSavePathFolder -Recurse).count
     $countNativePC = (Get-ChildItem -Path $backupModPathFolder).count
     
-    if ($countSave -ge 5) {
+    if ($countSave -ge 7) {
         $saveToPurge = Get-ChildItem $backupSavePathFolder -Recurse | Where-Object {($_.LastWriteTime -lt (Get-Date).AddHours((-48)))} | Remove-Item -Recurse -Force
         "$date : SUCCESS - Purge of save '$saveToPurge' from '$backupSavePathFolder'" | Out-File $logSavePath -Append
     }
     
-    if ($countNativePC -ge 3) {
+    if ($countNativePC -ge 5) {
         $nPCToPurge = Get-ChildItem $backupModPathFolder | Where-Object {($_.LastWriteTime -lt (Get-Date).AddHours((-36)))} | Remove-Item -Recurse -Force
         "$date : SUCCESS - Purge of mods '$nPCToPurge' from '$backupModPathFolder'" | Out-File $logModPath -Append
     }
@@ -126,7 +126,8 @@ function startBackup {
     End {
         
         $Header = New-BTHeader -Id 1 -Title "Backup automation done"
-        New-BurntToastNotification -Text "Files from MHW are backed up" , "View logs for more info" -Header $Header -AppLogo "C:\Users\puchi\OneDrive\Pictures\Logo\pepeOK.jpg"
+        $Image = "D:\puchi\OneDrive\Pictures\Logo\peepoHappy.jpg"
+        New-BurntToastNotification -Text "Files from MHW are backed up" , "View logs for more info" -Header $Header -AppLogo $Image
         
         exit
     }
